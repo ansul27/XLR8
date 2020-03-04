@@ -28,6 +28,15 @@ provider:
 
 # you can overwrite defaults here
 
+custom: 
+  tableName1: Client
+  tableName2: Location
+  tableName3: Job
+  tableName4: Employee
+  tableName5: EmployeeType
+  tableName6: EmployeeJob
+  tableName7: Product
+  tableName8: ProductClient
 
 
 functions:
@@ -37,6 +46,201 @@ functions:
      - http:
          path: users/create
          method: get
+
+resources: 
+  Resources: 
+    ClientTable: 
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName1}
+        AttributeDefinitions:
+          - AttributeName: ClientID
+            AttributeType: N
+          - AttributeName: ClientName
+            AttributeType: S
+          - AttributeName: ClientAddress
+            AttributeType: S
+          - AttributeName: ClientState
+            AttributeType: S
+          - AttributeName: ClientZIP
+            AttributeType: S
+          - AttributeName: ClientPhone
+            AttributeType: S
+          - AttributeName: ClientEmail
+            AttributeType: S
+          - AttributeName: ClientContactName
+            AttributeType: S
+
+        KeySchema: 
+            - AttributeName: ClientID
+              KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    LocationTable: 
+
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName2}
+        AttributeDefinitions: 
+          - AttributeName: LocationID
+            AttributeType: N
+          - AttributeName: LocationName
+            AttributeType: S
+
+
+        KeySchema: 
+          - AttributeName: LocationID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    JobTable: 
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName3}
+        AttributeDefinitions: 
+          - AttributeName: JobID
+            AttributeType: N
+          - AttributeName: ProductID
+            AttributeType: N
+          - AttributeName: LocationID
+            AttributeType: N
+          - AttributeName: EmployeeJobID
+            AttributeType: N
+          - AttributeName: JobStatus
+            AttributeType: S
+          - AttributeName: StartTime
+            AttributeType: S
+          - AttributeName: EndTime
+            AttributeType: S
+          - AttributeName: DateAssigned
+            AttributeType: S
+          - AttributeName: TotalTimeInMin
+            AttributeType: N
+
+        KeySchema: 
+          - AttributeName: JobID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    EmployeeTable: 
+
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName4}
+        AttributeDefinitions: 
+          - AttributeName: EmployeeID
+            AttributeType: N
+          - AttributeName: EmployeeFirstName
+            AttributeType: S
+          - AttributeName: EmployeeLastName
+            AttributeType: S
+          - AttributeName: EmployeeAddress
+            AttributeType: S
+          - AttributeName: EmployeeState
+            AttributeType: S
+          - AttributeName: EmployeeZip
+            AttributeType: S
+          - AttributeName: EmployeePhone
+            AttributeType: S
+          - AttributeName: EmployeeEmail
+            AttributeType: S
+          - AttributeName: EmployeeBirthdate
+            AttributeType: S
+          - AttributeName: EmployeeTypeID
+            AttributeType: N
+          - AttributeName: StartDate
+            AttributeType: S
+          - AttributeName: EndDate
+            AttributeType: S
+
+
+
+        KeySchema: 
+          - AttributeName: EmployeeID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    EmployeeTypeTable: 
+
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName5}
+        AttributeDefinitions: 
+          - AttributeName: EmployeeTypeID
+            AttributeType: N
+          - AttributeName: EmployeeTypeTitle
+            AttributeType: S
+
+
+        KeySchema: 
+          - AttributeName: EmployeeTypeID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    EmployeeJob: 
+
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName6}
+        AttributeDefinitions: 
+          - AttributeName: EmployeeJobID
+            AttributeType: N
+          - AttributeName: JobID
+            AttributeType: N
+          - AttributeName: EmployeeID
+            AttributeType: N
+
+        KeySchema: 
+          - AttributeName: EmployeeJobID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    ProductTable: 
+
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName7}
+        AttributeDefinitions: 
+          - AttributeName: ProductID
+            AttributeType: N
+          - AttributeName: ProductName
+            AttributeType: S
+          
+
+
+        KeySchema: 
+          - AttributeName: ProductID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+  ProductClientTable: 
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.tableName8}
+        AttributeDefinitions: 
+          - AttributeName: ProductClientID
+            AttributeType: N
+          - AttributeName: ProductID
+            AttributeType: N
+          - AttributeName: ClientID
+            AttributeType: N
+
+
+        KeySchema: 
+          - AttributeName: ProductClientID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+
+
+
+
+
+
+
+
+
+    
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
